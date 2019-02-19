@@ -1,0 +1,18 @@
+# Ignore everything at this layer.
+/*   
+# * is wrong because that ignores Everything
+
+# Allow gitignore
+!.gitignore
+
+# Allow ssh config, but not any other files as they may contain keys
+!.ssh/
+/.ssh/*
+!.ssh/config
+
+# Other config files
+!.bashrc
+!.bash_profile
+!.bash_common
+!.vimrc
+

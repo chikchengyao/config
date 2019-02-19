@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# convenience
+alias la='ls -a'
+alias ll='ls -l'
+alias lal='ls -al'
+
+# ssh logins 
+###### DEPRECATED, use ~/.ssh/config instead
+#alias sunfire='echo chikcy@sunfire.comp.nus.edu.sg'
+#alias saws='ssh -i ~/.ssh/ubuntu-1604-key.pem ubuntu@3.95.192.81'
+#alias aws='echo ubuntu@3.95.192.81'
+#alias kaws='echo -i ~/.ssh/ubuntu-1604-key.pem'
