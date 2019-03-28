@@ -242,9 +242,12 @@ augroup numbertoggle
     autocmd BufLeave,FocusLost,InsertEnter * set norelativenumber
 augroup END
 
-
 set ttimeout
 set timeoutlen=50
+
+" Merlin config
+let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+execute "set rtp+=" . g:opamshare . "/merlin/vim"
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -262,6 +265,7 @@ map <silent> <space> :noh<cr>
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 let mapleader = " "
+let maplocalleader = " "
 
 " Fast saving
 nmap <leader>w :w!<cr>
@@ -273,46 +277,68 @@ map p<leader> <leader>p
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" OCaml stuff
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" MERLIN
+
+" Remapping omnicomplete doesn't seem to work for some unknown reason
+"inoremap <C-S> <C-x><C-o>
+
+" Add reverse mappings to typecheck, expand and contract
+map t<localleader> <localleader>t
+map n<localleader> <localleader>n
+map p<localleader> <localleader>p
+
+
+" OCP-INDENT
+" The config recommended by realworldocaml
+autocmd FileType ocaml execute "set rtp+=" . substitute(system('opam config var share'), '\n$', '', '''') . "/ocp-indent/vim/indent/ocaml.vim"
+" The config the installer recommended
+" set rtp^="/Users/chik/.opam/default/share/ocp-indent/vim"
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Weird mappings - to clean up at some point
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" :W sudo saves the file 
-" (useful for handling the permission-denied error)
-command W w !sudo tee % > /dev/null
-
-" Smart way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
-
-" Close the current buffer
-map <leader>bd :Bclose<cr>:tabclose<cr>gT
-
-" Close all the buffers
-map <leader>ba :bufdo bd<cr>
-
-map <leader>l :bnext<cr>
-map <leader>h :bprevious<cr>
-
-" Useful mappings for managing tabs
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove 
-map <leader>t<leader> :tabnext 
-
-" Let 'tl' toggle between this and the last accessed tab
-let g:lasttab = 1
-nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
-au TabLeave * let g:lasttab = tabpagenr()
-
-
-" Opens a new tab with the current buffer's path
-" Super useful when editing files in the same directory
-map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
-
-" Switch CWD to the directory of the open buffer
-map <leader>cd :cd %:p:h<cr>:pwd<cr>
+"" :W sudo saves the file 
+"" (useful for handling the permission-denied error)
+"command W w !sudo tee % > /dev/null
+"
+"" Smart way to move between windows
+"map <C-j> <C-W>j
+"map <C-k> <C-W>k
+"map <C-h> <C-W>h
+"map <C-l> <C-W>l
+"
+"" Close the current buffer
+"map <leader>bd :Bclose<cr>:tabclose<cr>gT
+"
+"" Close all the buffers
+"map <leader>ba :bufdo bd<cr>
+"
+"map <leader>l :bnext<cr>
+"map <leader>h :bprevious<cr>
+"
+"" Useful mappings for managing tabs
+"map <leader>tn :tabnew<cr>
+"map <leader>to :tabonly<cr>
+"map <leader>tc :tabclose<cr>
+"map <leader>tm :tabmove 
+"map <leader>t<leader> :tabnext 
+"
+"" Let 'tl' toggle between this and the last accessed tab
+"let g:lasttab = 1
+"nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
+"au TabLeave * let g:lasttab = tabpagenr()
+"
+"
+"" Opens a new tab with the current buffer's path
+"" Super useful when editing files in the same directory
+"map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+"
+"" Switch CWD to the directory of the open buffer
+"map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
 
