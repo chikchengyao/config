@@ -155,8 +155,8 @@ set wrap "Wrap lines
 
 " Specify the behavior when switching between buffers 
 try
-  set switchbuf=useopen,usetab,newtab
-  set stal=2
+    set switchbuf=useopen,usetab,newtab
+    set stal=2
 catch
 endtry
 
@@ -235,6 +235,8 @@ endfunction
 " MY STUFF
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" When in insert mode, show absolute numbers
+" When in normal mode, show offsets
 set number relativenumber
 augroup numbertoggle
     autocmd!
@@ -242,28 +244,42 @@ augroup numbertoggle
     autocmd BufLeave,FocusLost,InsertEnter * set norelativenumber
 augroup END
 
-set ttimeout
-set timeoutlen=50
-
-" Merlin config
-let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-execute "set rtp+=" . g:opamshare . "/merlin/vim"
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " KEY MAPPINGS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Easy escape
+" Set key combo timeout. Set short (20-50ms) otherwise jk has
+" visual and accidental keypress issues.
+set ttimeout
+set timeoutlen=50
+
+" Easy escape for simultaneous presses
 inoremap kj <Esc>
 inoremap jk <Esc>
 
+
 " Clear search highlighting when <space> is pressed
-map <silent> <space> :noh<cr>
+
+" If in a Merlin environment, clear Merlin as well
+function! UnhighlightMerlinIfDefined()
+  if exists(":MerlinClearEnclosing")
+    execute "MerlinClearEnclosing"
+  endif
+endfunction
+command UnMerlin :call UnhighlightMerlinIfDefined()
+
+" The actual mapping
+map <silent> <space> :noh<CR>:UnMerlin<CR>
 
 
-" With a map leader it's possible to do extra key combinations
-" like <leader>w saves the current file
+" Omnicomplete mappings
+inoremap <C-f> <C-x><C-o>
+inoremap <C-j> <C-o>
+inoremap <C-k> <C-p>
+
+
+" Map leaders
 let mapleader = " "
 let maplocalleader = " "
 
@@ -280,20 +296,33 @@ map p<leader> <leader>p
 " OCaml stuff
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" MERLIN
+autocmd Filetype ocaml call SetOcamlOptions()
 
-" Remapping omnicomplete doesn't seem to work for some unknown reason
-"inoremap <C-S> <C-x><C-o>
+function SetOcamlOptions()
+    " type-checking: start 
+    map <localleader>f <localleader>t
+    map f<localleader> <localleader>f
 
-" Add reverse mappings to typecheck, expand and contract
-map t<localleader> <localleader>t
-map n<localleader> <localleader>n
-map p<localleader> <localleader>p
+	" type-checking: expand
+    map <localleader>j <localleader>n
+    map j<localleader> <localleader>j
+    
+	" type-checking: reduce
+    map <localleader>k <localleader>p
+    map k<localleader> <localleader>k
 
+	" find declaration
+    map <localleader>d :MerlinLocate<CR>
+    map d<localleader> <localleader>d
+endfunction 
+
+" Merlin config
+let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+execute "set rtp+=" . g:opamshare . "/merlin/vim"
 
 " OCP-INDENT
 " The config recommended by realworldocaml
-autocmd FileType ocaml execute "set rtp+=" . substitute(system('opam config var share'), '\n$', '', '''') . "/ocp-indent/vim/indent/ocaml.vim"
+" autocmd FileType ocaml execute "set rtp+=" . substitute(system('opam config var share'), '\n$', '', '''') . "/ocp-indent/vim/indent/ocaml.vim"
 " The config the installer recommended
 " set rtp^="/Users/chik/.opam/default/share/ocp-indent/vim"
 
