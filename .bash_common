@@ -4,6 +4,8 @@
 alias la='ls -a'
 alias ll='ls -l'
 alias lal='ls -al'
+alias g++='g++ -std=c++11'
+
 
 # ssh logins 
 ###### DEPRECATED, use ~/.ssh/config instead
