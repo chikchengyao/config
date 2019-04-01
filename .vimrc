@@ -1,4 +1,48 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vim-plug
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Auto installation
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+" Specify a directory for plugins
+" Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
+
+" For syntax checking - need to individually enable checkers
+Plug 'vim-syntastic/syntastic'
+
+Plug 'ctrlpvim/ctrlp.vim'
+
+" Initialize plugin system
+call plug#end()
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Syntastic
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Recommended syntastic settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" Use merlin autocomplete instead
+" let g:syntastic_ocaml_use_ocamlc = 1
+" let g:syntastic_ocaml_use_janestreet_core = 1
+" let g:syntastic_ocaml_janestreet_core_dir = '/Users/chik/.opam/default/lib/core'
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " UNCHANGING THINGS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
