@@ -363,6 +363,9 @@ function SetOcamlOptions()
 	" find declaration
     map <localleader>d :MerlinLocate<CR>
     map d<localleader> <localleader>d
+
+    map <localleader>e :MerlinErrorCheck<CR><C-w><C-w>
+    map e<localleader> <localleader>e
 endfunction 
 
 " Merlin config
