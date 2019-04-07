@@ -297,7 +297,7 @@ augroup END
 " Set key combo timeout. Set short (20-50ms) otherwise jk has
 " visual and accidental keypress issues.
 set ttimeout
-set timeoutlen=50
+set timeoutlen=30
 
 " Easy escape for simultaneous presses
 inoremap kj <Esc>
