@@ -332,6 +332,10 @@ let maplocalleader = " "
 nmap <leader>w :w!<cr>
 nmap w<leader> <leader>w
 
+" Fast quit
+nmap <leader>q :q<cr>
+nmap q<leader> <leader>q
+
 " Toggle paste mode on and off
 map <leader>p :setlocal paste!<cr>
 map p<leader> <leader>p
