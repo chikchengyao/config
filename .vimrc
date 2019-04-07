@@ -41,6 +41,7 @@ let g:syntastic_check_on_wq = 0
 " let g:syntastic_ocaml_use_janestreet_core = 1
 " let g:syntastic_ocaml_janestreet_core_dir = '/Users/chik/.opam/default/lib/core'
 
+let g:syntastic_cpp_compiler_options = ' -std=c++11'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " UNCHANGING THINGS
